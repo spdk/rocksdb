@@ -57,7 +57,7 @@ LIB_SOURCES =                                                   \
   env/env.cc                                                    \
   env/env_chroot.cc                                             \
   env/env_hdfs.cc                                               \
-  env/env_posix.cc                                              \
+  $(SPDK_ROOT_DIR)/lib/rocksdb/env_spdk.cc                      \
   env/io_posix.cc                                               \
   env/memenv.cc                                                 \
   memtable/hash_cuckoo_rep.cc                                   \

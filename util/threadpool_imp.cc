@@ -122,7 +122,7 @@ private:
 
 inline
 ThreadPoolImpl::Impl::Impl()
-    : 
+    :
       low_io_priority_(false),
       priority_(Env::LOW),
       env_(nullptr),
@@ -249,6 +249,7 @@ void* ThreadPoolImpl::Impl::BGThreadWrapper(void* arg) {
   BGThreadMetadata* meta = reinterpret_cast<BGThreadMetadata*>(arg);
   size_t thread_id = meta->thread_id_;
   ThreadPoolImpl::Impl* tp = meta->thread_pool_;
+  SpdkInitializeThread();
 #ifdef ROCKSDB_USING_THREAD_STATUS
   // for thread-status
   ThreadStatusUtil::RegisterThread(
@@ -366,7 +367,7 @@ int ThreadPoolImpl::Impl::UnSchedule(void* arg) {
   return count;
 }
 
-ThreadPoolImpl::ThreadPoolImpl() : 
+ThreadPoolImpl::ThreadPoolImpl() :
   impl_(new Impl()) {
 }
 
