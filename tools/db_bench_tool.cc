@@ -705,6 +705,10 @@ static bool ValidateTableCacheNumshardbits(const char* flagname,
 }
 DEFINE_int32(table_cache_numshardbits, 4, "");
 
+DEFINE_string(spdk, "", "Name of SPDK configuration file");
+DEFINE_string(spdk_bdev, "", "Name of SPDK blockdev to load");
+DEFINE_uint64(spdk_cache_size, 4096, "Size of SPDK filesystem cache (in MB)");
+
 #ifndef ROCKSDB_LITE
 DEFINE_string(env_uri, "", "URI for registry Env lookup. Mutually exclusive"
               " with --hdfs.");
@@ -5144,6 +5148,15 @@ int db_bench_tool(int argc, char** argv) {
 
   FLAGS_rep_factory = StringToRepFactory(FLAGS_memtablerep.c_str());
 
+  if (!FLAGS_spdk.empty()) {
+    NewSpdkEnv(&FLAGS_env, FLAGS_db, FLAGS_spdk, FLAGS_spdk_bdev, FLAGS_spdk_cache_size);
+    if (FLAGS_env == NULL) {
+      fprintf(stderr, "Could not load SPDK blobfs - check that SPDK mkfs was run "
+                      "against block device %s.\n", FLAGS_spdk_bdev.c_str());
+      exit(1);
+    }
+  }
+
   // The number of background threads should be at least as much the
   // max number of concurrent compactions.
   FLAGS_env->SetBackgroundThreads(FLAGS_max_background_compactions);
@@ -5164,8 +5177,15 @@ int db_bench_tool(int argc, char** argv) {
     FLAGS_stats_interval = 1000;
   }
 
-  rocksdb::Benchmark benchmark;
-  benchmark.Run();
+  // Allocate the Benchmark off the heap, so that we can explicitly delete it
+  //  before the SpdkEnv is deleted.
+  rocksdb::Benchmark *benchmark = new rocksdb::Benchmark;
+  benchmark->Run();
+  delete benchmark;
+
+  if (!FLAGS_spdk.empty()) {
+    delete FLAGS_env;
+  }
   return 0;
 }
 }  // namespace rocksdb
