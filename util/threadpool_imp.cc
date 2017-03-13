@@ -250,6 +250,7 @@ void* ThreadPoolImpl::Impl::BGThreadWrapper(void* arg) {
   BGThreadMetadata* meta = reinterpret_cast<BGThreadMetadata*>(arg);
   size_t thread_id = meta->thread_id_;
   ThreadPoolImpl::Impl* tp = meta->thread_pool_;
+  SpdkInitializeThread();
 #ifdef ROCKSDB_USING_THREAD_STATUS
   // for thread-status
   ThreadStatusUtil::RegisterThread(
@@ -262,6 +263,7 @@ void* ThreadPoolImpl::Impl::BGThreadWrapper(void* arg) {
 #ifdef ROCKSDB_USING_THREAD_STATUS
   ThreadStatusUtil::UnregisterThread();
 #endif
+  SpdkFinalizeThread();
   return nullptr;
 }
 
