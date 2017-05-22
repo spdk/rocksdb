@@ -344,6 +344,8 @@ public:
 	}
 };
 
+#ifdef SPDK_IO_PRIORITY_DEFAULT
+
 void SpdkInitializeThread(void)
 {
 	if (g_fs != NULL) {
@@ -351,6 +353,25 @@ void SpdkInitializeThread(void)
 		g_sync_args.channel = spdk_fs_alloc_io_channel_sync(g_fs, SPDK_IO_PRIORITY_DEFAULT);
 	}
 }
+
+#else
+
+static void
+_spdk_send_msg(thread_fn_t fn, void *ctx, void *thread_ctx)
+{
+	/* Not supported */
+	assert(false);
+}
+
+void SpdkInitializeThread(void)
+{
+	if (g_fs != NULL) {
+		spdk_allocate_thread(_spdk_send_msg, NULL);
+		g_sync_args.channel = spdk_fs_alloc_io_channel_sync(g_fs);
+	}
+}
+
+#endif
 
 static void SpdkStartThreadWrapper(void* arg) {
 	StartThreadState* state = reinterpret_cast<StartThreadState*>(arg);
