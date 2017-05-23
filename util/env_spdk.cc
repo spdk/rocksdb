@@ -357,7 +357,7 @@ void SpdkInitializeThread(void)
 #else
 
 static void
-_spdk_send_msg(thread_fn_t fn, void *ctx, void *thread_ctx)
+_spdk_send_msg(spdk_thread_fn fn, void *ctx, void *thread_ctx)
 {
 	/* Not supported */
 	assert(false);
