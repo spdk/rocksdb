@@ -105,6 +105,9 @@ $(warning Warning: Compiling in debug mode. Don't use the resulting binary in pr
 endif
 
 #-----------------------------------------------
+SPDK_DIR ?= ../spdk
+SPDK_ROOT_DIR := $(abspath $(SPDK_DIR))
+
 include src.mk
 
 AM_DEFAULT_VERBOSITY = 0
@@ -133,14 +136,12 @@ am__v_AR_ = $(am__v_AR_$(AM_DEFAULT_VERBOSITY))
 am__v_AR_0 = @echo "  AR      " $@;
 am__v_AR_1 =
 
-SPDK_DIR ?= ../spdk
-SPDK_ROOT_DIR := $(abspath $(SPDK_DIR))
 include $(SPDK_ROOT_DIR)/mk/spdk.common.mk
 include $(SPDK_ROOT_DIR)/mk/spdk.app.mk
 include $(SPDK_ROOT_DIR)/mk/spdk.modules.mk
 # The SPDK makefiles turn this on, but RocksDB won't compile with it.  So
 #  turn it off after including the SPDK makefiles.
-CXXFLAGS += -Wno-missing-declarations -I$(SPDK_DIR)/include
+CXXFLAGS += -Wno-missing-declarations -I$(SPDK_DIR)/include -Iutil/
 # The SPDK Makefiles may turn these options on but we do not want to enable
 #  them for the RocksDB source files.
 CXXFLAGS += -fno-profile-arcs -fno-test-coverage
