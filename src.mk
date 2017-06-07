@@ -102,7 +102,7 @@ LIB_SOURCES =                                                   \
   util/env.cc                                                   \
   util/env_chroot.cc                                            \
   util/env_hdfs.cc                                              \
-  util/env_spdk.cc                                              \
+  $(SPDK_ROOT_DIR)/lib/rocksdb/env_spdk.cc                      \
   util/event_logger.cc                                          \
   util/file_util.cc                                             \
   util/file_reader_writer.cc                                    \
