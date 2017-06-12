@@ -136,31 +136,10 @@ am__v_AR_ = $(am__v_AR_$(AM_DEFAULT_VERBOSITY))
 am__v_AR_0 = @echo "  AR      " $@;
 am__v_AR_1 =
 
-include $(SPDK_ROOT_DIR)/mk/spdk.common.mk
-include $(SPDK_ROOT_DIR)/mk/spdk.app.mk
-include $(SPDK_ROOT_DIR)/mk/spdk.modules.mk
-# The SPDK makefiles turn this on, but RocksDB won't compile with it.  So
-#  turn it off after including the SPDK makefiles.
-CXXFLAGS += -Wno-missing-declarations -I$(SPDK_DIR)/include -Iutil/
-# The SPDK Makefiles may turn these options on but we do not want to enable
-#  them for the RocksDB source files.
-CXXFLAGS += -fno-profile-arcs -fno-test-coverage
-CXXFLAGS += -fno-sanitize=undefined
-CXXFLAGS += -fno-sanitize=address
-SPDK_LIB_LIST = bdev copy event conf trace log blobfs blob blob_bdev \
-		util jsonrpc json rpc
-
 AM_LINK += $(AM_V_CCLD)$(CXX)
-AM_LINK += $(BLOCKDEV_MODULES_LINKER_ARGS)
 AM_LINK += $^ $(EXEC_LDFLAGS) -o $@ $(LDFLAGS) $(COVERAGEFLAGS) -ldl
-AM_LINK += $(SPDK_LIB_LINKER_ARGS)
-AM_LINK += $(ENV_LINKER_ARGS)
-ifeq ($(CONFIG_UBSAN),y)
-AM_LINK += -fsanitize=undefined
-endif
-ifeq ($(CONFIG_COVERAGE),y)
-AM_LINK += -fprofile-arcs -ftest-coverage
-endif
+
+include $(SPDK_ROOT_DIR)/lib/rocksdb/spdk.rocksdb.mk
 
 ifdef ROCKSDB_USE_LIBRADOS
 LIB_SOURCES += utilities/env_librados.cc
