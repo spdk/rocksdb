@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c14cbb1d_7251c761",
+        "filename": "tools/db_bench_tool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5155,
+      "author": {
+        "id": 1010525
+      },
+      "writtenOn": "2017-06-22T23:36:17Z",
+      "side": 1,
+      "message": "Funky indentation (the rest is using only spaces)",
+      "revId": "2bc18f33813f802f871bb86574c3d2cf5fb5c383",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8cdc7eb5_a6046e8a",
+        "filename": "tools/db_bench_tool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5182,
+      "author": {
+        "id": 1010525
+      },
+      "writtenOn": "2017-06-22T23:36:17Z",
+      "side": 1,
+      "message": "Double semicolon",
+      "range": {
+        "startLine": 5182,
+        "startChar": 56,
+        "endLine": 5182,
+        "endChar": 58
+      },
+      "revId": "2bc18f33813f802f871bb86574c3d2cf5fb5c383",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}

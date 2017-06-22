@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d37c640_558d866b",
+        "filename": "util/threadpool_imp.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1010525
+      },
+      "writtenOn": "2017-06-22T23:36:17Z",
+      "side": 0,
+      "message": "Unrelated whitespace change",
+      "revId": "0ccaba2a05db5c5930018d0d78775f29ba622e16",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31abf2a5_d5309eb7",
+        "filename": "util/threadpool_imp.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1010525
+      },
+      "writtenOn": "2017-06-22T23:36:17Z",
+      "side": 0,
+      "message": "Ditto",
+      "revId": "0ccaba2a05db5c5930018d0d78775f29ba622e16",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
