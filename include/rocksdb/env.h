@@ -1093,7 +1093,7 @@ Status NewHdfsEnv(Env** hdfs_env, const std::string& fsname);
 
 // Returns a new environment that is used for SPDK environment.
 void NewSpdkEnv(Env** spdk_env, const std::string& fsname, const std::string& confname,
-		const std::string& bdevname, uint64_t cache_size_in_mb);
+		const std::string& bdevname, uint64_t cache_size_in_mb, uint32_t cache_buffer_shift);
 
 // Initializes a thread for SpdkEnv processing.
 void SpdkInitializeThread(void);
