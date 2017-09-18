@@ -33,6 +33,12 @@
 #undef GetCurrentTime
 #endif
 
+// Definition of spdk_opt structure for initializing spdk_env.
+struct spdk_opts {
+	uint64_t cache_size;
+	uint32_t shm_id;
+};
+
 namespace rocksdb {
 
 class FileLock;
@@ -1129,7 +1135,8 @@ Env* NewTimedEnv(Env* base_env);
 
 // Returns a new environment that is used for SPDK environment.
 Env* NewSpdkEnv(Env* base_env, const std::string& fsname, const std::string& confname,
-		const std::string& bdevname, uint64_t cache_size_in_mb);
+		const std::string& bdevname, struct spdk_opts *opts, size_t opts_size);
+
 
 // Initializes a thread for SpdkEnv processing.
 void SpdkInitializeThread(void);
