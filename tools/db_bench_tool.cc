@@ -712,6 +712,7 @@ DEFINE_int32(table_cache_numshardbits, 4, "");
 DEFINE_string(spdk, "", "Name of SPDK configuration file");
 DEFINE_string(spdk_bdev, "", "Name of SPDK blockdev to load");
 DEFINE_uint64(spdk_cache_size, 4096, "Size of SPDK filesystem cache (in MB)");
+DEFINE_int32(spdk_shared_mem, -1, "Shared memory region id from stub application");
 
 #ifndef ROCKSDB_LITE
 DEFINE_string(env_uri, "", "URI for registry Env lookup. Mutually exclusive"
@@ -1103,6 +1104,12 @@ class ReportFileOpEnv : public EnvWrapper {
 };
 
 }  // namespace
+
+// definition of spdk_opt structure for initializing spdk_env
+struct spdk_opts{
+	uint64_t cache_size;
+	int32_t shm_id;
+};
 
 // Helper for quickly generating random data.
 class RandomGenerator {
@@ -5165,7 +5172,10 @@ int db_bench_tool(int argc, char** argv) {
   }
 
   if (!FLAGS_spdk.empty()) {
-    FLAGS_env = rocksdb::NewSpdkEnv(rocksdb::Env::Default(), FLAGS_db, FLAGS_spdk, FLAGS_spdk_bdev, FLAGS_spdk_cache_size);
+    struct spdk_opts opts;
+    opts.cache_size = FLAGS_spdk_cache_size;
+    opts.shm_id = FLAGS_spdk_shared_mem;
+    FLAGS_env = rocksdb::NewSpdkEnv(rocksdb::Env::Default(), FLAGS_db, FLAGS_spdk, FLAGS_spdk_bdev, &opts, sizeof(struct spdk_opts));
     if (FLAGS_env == NULL) {
       fprintf(stderr, "Could not load SPDK blobfs - check that SPDK mkfs was run "
                       "against block device %s.\n", FLAGS_spdk_bdev.c_str());
