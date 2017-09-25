@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3481523_c749f03e",
+        "filename": "include/rocksdb/env.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1010525
+      },
+      "writtenOn": "2017-09-25T18:14:38Z",
+      "side": 1,
+      "message": "We might want to introduce some kind of options struct to hold all of these parameters so that we can add new options without breaking compatibility.  As is, this will break the build for any version of SPDK before the env change.\n\nYou didn\u0027t really introduce this problem, but since we\u0027re touching it anyway, it would be a good time to fix it up once and for all to avoid future compatibility problems.",
+      "revId": "06320095c0178e0ad0b76acb20da1874089b4658",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
