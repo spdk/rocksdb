@@ -171,6 +171,8 @@ endif
 
 #-----------------------------------------------
 include src.mk
+SPDK_DIR ?= ../spdk
+SPDK_ROOT_DIR := $(abspath $(SPDK_DIR))
 
 AM_DEFAULT_VERBOSITY = 0
 
@@ -204,6 +206,9 @@ LDFLAGS += -lrados
 endif
 
 AM_LINK = $(AM_V_CCLD)$(CXX) $^ $(EXEC_LDFLAGS) -o $@ $(LDFLAGS) $(COVERAGEFLAGS)
+
+include $(SPDK_ROOT_DIR)/lib/rocksdb/spdk.rocksdb.mk
+
 # Detect what platform we're building on.
 # Export some common variables that might have been passed as Make variables
 # instead of environment variables.
