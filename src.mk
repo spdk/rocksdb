@@ -83,6 +83,7 @@ LIB_SOURCES =                                                   \
   env/env_encryption.cc                                         \
   env/env_hdfs.cc                                               \
   env/env_posix.cc                                              \
+  $(SPDK_DIR)/lib/rocksdb/env_spdk.cc                      \
   env/file_system.cc                                            \
   env/fs_posix.cc                                               \
   env/file_system_tracer.cc                                     \

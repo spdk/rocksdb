@@ -1665,4 +1665,11 @@ Status NewEnvLogger(const std::string& fname, Env* env,
 
 std::unique_ptr<Env> NewCompositeEnv(std::shared_ptr<FileSystem> fs);
 
+// Returns a new environment that is used for SPDK environment.
+Env* NewSpdkEnv(Env* base_env, const std::string& fsname, const std::string& confname,
+                const std::string& bdevname, uint64_t cache_size_in_mb);
+
+// Initializes a thread for SpdkEnv processing.
+void SpdkInitializeThread(void);
+
 }  // namespace ROCKSDB_NAMESPACE
