@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56be72c8_fca9d1fe",
+        "filename": "util/threadpool_imp.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1011222
+      },
+      "writtenOn": "2018-08-31T17:43:49Z",
+      "side": 1,
+      "message": "Can you try without this change?  I think recent changes in the SpdkEnv layer mean this is no longer needed.",
+      "revId": "9aa87dee37fa397af68becb0a599789f016d927c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
