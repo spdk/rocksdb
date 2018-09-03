@@ -16,6 +16,24 @@
       "revId": "9aa87dee37fa397af68becb0a599789f016d927c",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "412f5596_78f2ce18",
+        "filename": "util/threadpool_imp.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1011204
+      },
+      "writtenOn": "2018-09-03T06:38:31Z",
+      "side": 1,
+      "message": "The line code is still required, we declared g_sync_args variable with __thread attribute, so if we removed this line, we must ensure every thread from db_bench will initialize the channel.",
+      "parentUuid": "56be72c8_fca9d1fe",
+      "revId": "9aa87dee37fa397af68becb0a599789f016d927c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
