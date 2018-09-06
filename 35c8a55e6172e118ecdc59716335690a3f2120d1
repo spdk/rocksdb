@@ -1,0 +1,8 @@
+Code-Review+2: Jim Harris <james.r.harris@intel.com>
+Code-Review+2: Shuhei Matsumoto <shuhei.matsumoto.xt@hitachi.com>
+Verified+1: Jim Harris <james.r.harris@intel.com>
+Submitted-by: Jim Harris <james.r.harris@intel.com>
+Submitted-at: Thu, 06 Sep 2018 15:28:52 +0000
+Reviewed-on: https://review.gerrithub.io/424728
+Project: spdk/rocksdb
+Branch: refs/heads/spdk-v5.6.1
