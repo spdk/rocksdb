@@ -1131,12 +1131,6 @@ Env* NewTimedEnv(Env* base_env);
 Env* NewSpdkEnv(Env* base_env, const std::string& fsname, const std::string& confname,
 		const std::string& bdevname, uint64_t cache_size_in_mb);
 
-// Initializes a thread for SpdkEnv processing.
-void SpdkInitializeThread(void);
-
-// Finalizes a thread for SpdkEnv processing.
-void SpdkFinalizeThread(void);
-
 }  // namespace rocksdb
 
 #endif  // STORAGE_ROCKSDB_INCLUDE_ENV_H_
