@@ -1323,6 +1323,10 @@ static bool ValidateTableCacheNumshardbits(const char* flagname,
 }
 DEFINE_int32(table_cache_numshardbits, 4, "");
 
+DEFINE_string(spdk, "", "Name of SPDK configuration file");
+DEFINE_string(spdk_bdev, "", "Name of SPDK blockdev to load");
+DEFINE_uint64(spdk_cache_size, 4096, "Size of SPDK filesystem cache (in MB)");
+
 DEFINE_string(env_uri, "",
               "URI for registry Env lookup. Mutually exclusive with --fs_uri");
 DEFINE_string(fs_uri, "",
@@ -8520,6 +8524,15 @@ int db_bench_tool(int argc, char** argv) {
     exit(1);
   }
 
+  if (!FLAGS_spdk.empty()) {
+    FLAGS_env = rocksdb::NewSpdkEnv(rocksdb::Env::Default(), FLAGS_db, FLAGS_spdk, FLAGS_spdk_bdev, FLAGS_spdk_cache_size);
+    if (FLAGS_env == NULL) {
+      fprintf(stderr, "Could not load SPDK blobfs - check that SPDK mkfs was run "
+                      "against block device %s.\n", FLAGS_spdk_bdev.c_str());
+      exit(1);
+    }
+  }
+
   if (!strcasecmp(FLAGS_compaction_fadvice.c_str(), "NONE"))
     FLAGS_compaction_fadvice_e = ROCKSDB_NAMESPACE::Options::NONE;
   else if (!strcasecmp(FLAGS_compaction_fadvice.c_str(), "NORMAL"))
@@ -8573,13 +8586,21 @@ int db_bench_tool(int argc, char** argv) {
     exit(1);
   }
 
-  ROCKSDB_NAMESPACE::Benchmark benchmark;
-  benchmark.Run();
+  // Allocate the Benchmark off the heap, so that we can explicitly delete it
+  //  before the SpdkEnv is deleted.
+  ROCKSDB_NAMESPACE::Benchmark *benchmark = new ROCKSDB_NAMESPACE::Benchmark;
+  benchmark->Run();
 
   if (FLAGS_print_malloc_stats) {
     std::string stats_string;
     ROCKSDB_NAMESPACE::DumpMallocStats(&stats_string);
     fprintf(stdout, "Malloc stats:\n%s\n", stats_string.c_str());
+  }
+
+  delete benchmark;
+
+  if (!FLAGS_spdk.empty()) {
+    delete FLAGS_env;
   }
 
   return 0;
